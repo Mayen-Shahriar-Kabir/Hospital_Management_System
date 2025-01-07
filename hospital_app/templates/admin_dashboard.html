@@ -1,0 +1,221 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        .container {
+            width: 80%;
+            margin: 20px auto;
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        h2, h3 {
+            color: #333;
+        }
+
+        label {
+            display: block;
+            margin: 15px 0 5px;
+            font-weight: bold;
+        }
+
+        select, input {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            display: inline-block;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+
+        table {
+            width: 90%;
+            margin: 20px auto;
+            border-collapse: collapse;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        table thead {
+            background-color: #007bff;
+            color: #fff;
+        }
+
+        table th, table td {
+            padding: 12px 15px;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+
+        table tbody tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        table tbody tr:hover {
+            background-color: #f9f9f9;
+        }
+
+        .logout-link {
+            margin-top: 20px;
+            display: block;
+            text-align: center;
+        }
+
+        .logout-button {
+            background-color: #f44336; 
+            width: auto;
+        }
+
+        .logout-button:hover {
+            background-color: #e53935;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Admin Dashboard</h2>
+
+        <h3>Register a Doctor</h3>
+        <form method="POST">
+            {% csrf_token %}
+            
+            <label for="username">Username (Doctor's Username):</label>
+            <input type="text" name="username" id="username" required>
+
+            <label for="name">Doctor Name:</label>
+            <input type="text" name="name" id="name" required>
+
+            <label for="email">Doctor's Email:</label>
+            <input type="email" name="email" id="email" required>
+
+            <label for="speciality">Speciality:</label>
+            <select name="speciality" id="speciality" required>
+                <option value="Cardiology">Cardiology</option>
+                <option value="Neurology">Neurology</option>
+                <option value="Gynecology">Gynecology</option>
+                <option value="Dentology">Dentology</option>
+                <option value="Pediatrics">Pediatrics</option>
+                <option value="Dermatology">Dermatology</option>
+            </select>
+
+            <label for="availability">Availability:</label>
+            <select name="availability" id="availability" required>
+                <option value="Available">Available</option>
+                <option value="Not Available">Not Available</option>
+            </select>
+
+            <label for="contact">Contact:</label>
+            <input type="text" name="contact" id="contact" required>
+
+            <label for="password">Password:</label>
+            <input type="password" name="password" id="password" required>
+
+            <button type="submit">Register Doctor</button>
+        </form>
+
+        <!-- Payment Table -->
+        <h2>Payment Table</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Payment ID</th>
+                    <th>Amount</th>
+                    <th>Date</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for payment in payments %}
+                <tr>
+                    <td>{{ payment.payment_id }}</td>
+                    <td>{{ payment.amount }}</td>
+                    <td>{{ payment.date }}</td>
+                    <td>{{ payment.status }}</td>
+                    <td>
+                        {% if payment.status != 'Paid' %}
+                        <form method="POST" action="">
+                            {% csrf_token %}
+                            <input type="hidden" name="payment_id" value="{{ payment.payment_id }}">
+                            <button type="submit" name="action" value="mark_paid">Mark as Paid</button>
+                        </form>
+                        {% else %}
+                        Paid
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <!-- Lab Report Table -->
+        <h2>Lab Report Table</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Report ID</th>
+                    <th>Date</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for report in lab_reports %}
+                <tr>
+                    <td>{{ report.report_id }}</td>
+                    <td>{{ report.date }}</td>
+                    <td>{{ report.status }}</td>
+                    <td>
+                        {% if report.status != 'Delivered' %}
+                        <form method="POST" action="">
+                            {% csrf_token %}
+                            <input type="hidden" name="report_id" value="{{ report.report_id }}">
+                            <button type="submit" name="action" value="mark_delivered">Mark as Delivered</button>
+                        </form>
+                        {% else %}
+                        Delivered
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <!-- Logout Button -->
+        <div class="logout-link">
+            <form method="POST" action="{% url 'logout' %}">
+                {% csrf_token %}
+                <button type="submit" class="logout-button">Logout</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

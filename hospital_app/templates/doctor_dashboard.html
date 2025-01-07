@@ -1,0 +1,172 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <style>
+       body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 20px auto;
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h2, h3 {
+            color: #333;
+            text-align: center;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        table th, table td {
+            padding: 10px;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+
+        table th {
+            background-color: #006028;
+            color: white;
+        }
+
+        table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        table tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        input[type="hidden"], select, textarea {
+            width: calc(100% - 20px);
+            padding: 8px;
+            margin: 5px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .logout-link {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .logout-link a {
+            color: #fff;
+            text-decoration: none;
+            background-color: #dc3545;
+            padding: 10px 15px;
+            border-radius: 4px;
+        }
+
+        .logout-link a:hover {
+            background-color: #c82333;
+        } 
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Doctor Dashboard</h2>
+        <h3>Appointments</h3>
+        <table>
+            <tr>
+                <th>Patient Name</th>
+                <th>Date</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+            {% for appointment in appointments %}
+                <tr>
+                    <td>{{ appointment.patient.name }}</td>
+                    <td>{{ appointment.date }}</td>
+                    <td>{{ appointment.status }}</td>
+                    <td>
+                        {% if appointment.status == 'Scheduled' %}
+                            <form method="POST">
+                                {% csrf_token %}
+                                <input type="hidden" name="appointment_id" value="{{ appointment.appointment_id }}">
+                                <select name="status">
+                                    <option value="Attended">Attended</option>
+                                    <option value="Cancelled">Cancelled</option>
+                                </select>
+                                <button type="submit">Update Status</button>
+                            </form>
+                        {% else %}
+                            {{ appointment.status }}
+                        {% endif %}
+                    </td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="6">No appointments found.</td>
+                </tr>
+            {% endfor %}
+        </table>
+
+        <h3>Lab Reports</h3>
+        <table>
+            <tr>
+                <th>Lab Report ID</th>
+                <th>Test Name</th>
+                <th>Date</th>
+                <th>Diagnosis</th>
+                <th>Action</th>
+            </tr>
+            {% for lab_report in lab_reports %}
+                <tr>
+                    <td>{{ lab_report.report_id }}</td>
+                    <td>{{ lab_report.test_name }}</td>
+                    <td>{{ lab_report.date }}</td>
+                    <td>{{ lab_report.diagnosis }}</td>
+                    <td>
+                        <form method="POST">
+                            {% csrf_token %}
+                            <input type="hidden" name="lab_report_id" value="{{ lab_report.report_id }}">
+                            <textarea name="diagnosis" rows="3" cols="30">{{ lab_report.diagnosis }}</textarea>
+                            <button type="submit">Update Diagnosis</button>
+                        </form>
+                    </td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="6">No lab reports found.</td>
+                </tr>
+            {% endfor %}
+        </table>
+
+        <p class="logout-link"><a href="{% url 'logout' %}" class="logout-button">Logout</a></p>
+    </div>
+</body>
+</html>

@@ -1,0 +1,234 @@
+/* Navbar */
+nav {
+    background-color: #016E2E;
+    padding: 10px 20px;
+    display: flex;                  
+    justify-content: space-between; 
+}
+
+li {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.menu-container {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.menu {
+    font-size: 20px;
+    color: white;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.menu:hover {
+    color: burlywood;
+}
+
+.logo {
+    width: 100px; 
+    height: auto; 
+    border-radius: 50%; 
+}
+
+
+/* welcome banner */
+.banner {
+    height: 75vh;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5); 
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+/* about us section */
+
+.about-us {
+    width: 100%;
+    margin: auto;
+    padding: 50px;
+}
+
+.about-container {
+    display: flex;
+    justify-content: center; 
+    align-items: center;
+    gap: 50px;
+}
+
+
+
+
+/* Appointment Section */
+.appointment-section {
+    text-align: center;
+    padding: 40px 5%;
+    background-color: #f4f4f4;
+}
+
+.appointment-container h2 {
+    font-size: 2rem;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.appointment-container p {
+    font-size: 1rem;
+    color: #666;
+    margin-bottom: 20px;
+}
+
+.btn {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.btn:hover {
+    background-color: #45a049;
+}
+
+
+
+
+/* Lab Test Section */
+.labtest-section {
+    text-align: center;
+    padding: 40px 5%;
+    background-color: #f9f9f9;
+}
+
+.labtest-container h2 {
+    font-size: 2rem;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.labtest-container p {
+    font-size: 1rem;
+    color: #666;
+    margin-bottom: 20px;
+}
+
+.labtest-cards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+
+.card {
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    text-align: center;
+    flex: 1 1 300px;
+    max-width: 300px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.card h3 {
+    font-size: 1.5rem;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.card p {
+    font-size: 1rem;
+    color: #666;
+}
+
+.add-test-btn {
+    background-color: #4CAF50;
+    color: white;
+    padding: 8px 16px;
+    font-size: 14px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.add-test-btn:hover {
+    background-color: #45a049;
+}
+
+
+/* footer */
+.footer {
+    background-color: #016E2E;
+    color: white;
+    padding: 50px;
+    text-align: center;
+    font-size: 16px;
+}
+
+.footer-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.footer-section {
+    flex: 1 1 300px;
+    max-width: 300px;
+}
+
+.footer-section h4 {
+    font-size: 18px;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+    border-bottom: 2px solid white;
+    display: inline-block;
+    padding-bottom: 5px;
+}
+
+.footer-section ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.footer-section ul li {
+    margin-bottom: 10px;
+}
+
+.contact-info p {
+    margin: 10px 0;
+}
+
+.social-icons {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.social-icons img {
+    width: 30px;
+    height: 30px;
+    transition: transform 0.3s;
+}
+
+.footer-bottom {
+    margin-top: 30px;
+    font-size: 14px;
+    color: #ddd;
+}
